@@ -2,12 +2,21 @@
   "name": "gorse-util",
   "version": "1.0.0",
   "description": "tiny utils pkg to keep gorse data in sync with main db",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "repository": "https://github.com/techoutliers/gorse-util",
   "author": "Outliers Tech Team",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "start": "nodemon dist/index.js",
+    "dev": "nodemon dist/index.js",
+    "watch": "tsc -w"
+  },
   "dependencies": {
     "axios": "^0.26.0"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.18"
   }
 }
