@@ -1,5 +1,5 @@
 {
-  "name": "gorse-util",
+  "name": "@techoutliers/gorse-util",
   "version": "1.0.2",
   "description": "tiny utils pkg to keep gorse data in sync with main db",
   "main": "dist/index.js",
