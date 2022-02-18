@@ -1,6 +1,6 @@
 {
   "name": "gorse-util",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "tiny utils pkg to keep gorse data in sync with main db",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
