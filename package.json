@@ -7,7 +7,6 @@
   "repository": "https://github.com/techoutliers/gorse-util.git",
   "author": "Outliers Tech Team",
   "license": "MIT",
-  "private": true,
   "scripts": {
     "start": "nodemon dist/index.js",
     "dev": "nodemon dist/index.js",
@@ -19,5 +18,8 @@
   },
   "devDependencies": {
     "@types/node": "^17.0.18"
+  },
+  "peerDependencies": {
+    "mongoose": "^6.2.2"
   }
 }
