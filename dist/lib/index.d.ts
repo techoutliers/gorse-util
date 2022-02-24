@@ -39,5 +39,51 @@ declare class GorseUtil {
         userVibes: Record<feed_set_account_status_user_vibes, string>[];
         likes: Record<feed_set_account_status_likes, string>[];
     }): Promise<void>;
+    feed_deleteUser(args: {
+        userId: string;
+        vibes: {
+            _id: string;
+        }[];
+    }): Promise<void>;
+    feed_recordScreenshot(args: {
+        userId: string;
+        vibes: {
+            _id: string;
+        }[];
+    }): Promise<void>;
+    feed_admin_activate(args: {
+        userId: string;
+        userVibes: Record<feed_set_account_status_user_vibes, string>[];
+        allLikes: Record<feed_set_account_status_likes, string>[];
+        profileStatus: string;
+    }): Promise<void>;
+    feed_admin_hideVibeAsAdmin(args: {
+        vibeId: string;
+        adminStatus: "hidden" | "unhidden";
+    }): Promise<void>;
+    feed_admin_deleteVibeAsAdmin(args: {
+        vibeId: string;
+    }): Promise<void>;
+    feed_admin_suspendIt(args: {
+        userId: string;
+        vibe: {
+            hashtags: string[];
+            vibeTags: string[];
+            description: string;
+            createdAt: string;
+            adminHidden: "hidden" | "unhidden";
+            _id: string;
+        };
+        likes: Record<feed_set_account_status_likes, string>[];
+        vibeId: string;
+        action: "delete" | "reinstate";
+        profileStatus: "private" | "public";
+    }): Promise<void>;
+    feed_admin_deactivateUser(args: {
+        userId: string;
+        vibes: {
+            _id: string;
+        }[];
+    }): Promise<void>;
 }
 export default GorseUtil;
