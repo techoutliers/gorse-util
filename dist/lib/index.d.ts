@@ -85,5 +85,25 @@ declare class GorseUtil {
             _id: string;
         }[];
     }): Promise<void>;
+    feed_admin_deleteUser(args: {
+        userId: string;
+        vibes: {
+            _id: string;
+        }[];
+    }): Promise<void>;
+    feed_admin_confirmUser_insertUser(args: {
+        userId: string;
+        profileStatus: string;
+    }): Promise<void>;
+    feed_admin_confirmUser_postProfPics(args: {
+        userId: string;
+        userVibes: Record<feed_set_account_status_user_vibes, string>[];
+        profileStatus: string;
+    }): Promise<void>;
+    feed_admin_confirmUserAll_postProfPics(args: {
+        userId: string;
+        userVibes: Record<feed_set_account_status_user_vibes, string>[];
+        profileStatus: string;
+    }): Promise<void>;
 }
 export default GorseUtil;

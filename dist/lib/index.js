@@ -641,6 +641,175 @@ var GorseUtil = /** @class */ (function () {
             });
         });
     };
+    GorseUtil.prototype.feed_admin_deleteUser = function (args) {
+        return __awaiter(this, void 0, void 0, function () {
+            var userId, vibes, user_result, p, i, promise;
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        userId = args.userId, vibes = args.vibes;
+                        return [4 /*yield*/, axios_1.default
+                                .delete(this.feedUrl + "user/".concat(userId))
+                                .then(function (d) {
+                                var _a;
+                                return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d }, "successfully deleted user in feed_admin_deleteUser in gorse feed");
+                            })
+                                .catch(function (err) {
+                                var _a;
+                                return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.error({ err: err }, "failed to delete user deleted user in feed_admin_deleteUser in gorse feed");
+                            })];
+                    case 1:
+                        user_result = _a.sent();
+                        p = [];
+                        for (i = 0; i < vibes.length; i++) {
+                            promise = axios_1.default.delete(this.feedUrl + "item/".concat(vibes[i]._id.toString()));
+                            p.push(promise);
+                        }
+                        Promise.all(p)
+                            .then(function (d) {
+                            var _a;
+                            return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d }, "successfully deleted items (vibes) from gorse feed in feed_admin_deleteUser");
+                        })
+                            .catch(function (err) {
+                            var _a;
+                            return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.error({ err: err }, "failed to delete items (vibes) from gorse feed in feed_admin_deleteUser");
+                        });
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    GorseUtil.prototype.feed_admin_confirmUser_insertUser = function (args) {
+        return __awaiter(this, void 0, void 0, function () {
+            var userId, profileStatus, headers, hold, user_params;
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        userId = args.userId, profileStatus = args.profileStatus;
+                        headers = { "Content-Type": "application/json" };
+                        hold = [""];
+                        user_params = {
+                            Userid: userId,
+                            Comment: "",
+                            Labels: hold,
+                            Subscribe: hold,
+                            Status: profileStatus || "public",
+                        };
+                        return [4 /*yield*/, axios_1.default
+                                .post(this.feedUrl + "user", user_params, { headers: headers })
+                                .then(function (d) {
+                                var _a;
+                                return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d }, "successfully added user in feed_admin_activate");
+                            })
+                                .catch(function (e) {
+                                var _a;
+                                return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.error({ err: e }, "failed to post user in feed_admin_activate in gorse feed");
+                            })];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    GorseUtil.prototype.feed_admin_confirmUser_postProfPics = function (args) {
+        return __awaiter(this, void 0, void 0, function () {
+            var userId, profileStatus, userVibes, headers, params1, i, merge, param;
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        userId = args.userId, profileStatus = args.profileStatus, userVibes = args.userVibes;
+                        headers = { "Content-Type": "application/json" };
+                        params1 = [];
+                        for (i = 0; i < userVibes.length; i++) {
+                            merge = [];
+                            if (userVibes[i].vibeTags) {
+                                merge = __spreadArray(__spreadArray([], userVibes[i].vibeTags, true), userVibes[i].hashtags, true);
+                            }
+                            else {
+                                merge = __spreadArray([], userVibes[i].hashtags, true);
+                            }
+                            param = {
+                                Itemid: userVibes[i]._id.toString(),
+                                Labels: merge,
+                                Comment: userVibes[i].description
+                                    ? userVibes[i].description
+                                    : "some comment",
+                                Timestamp: userVibes[i].createdAt,
+                                Userid: userId,
+                                Status: profileStatus === "public" ? "public" : "private",
+                                AdminStatus: userVibes[i].adminHidden ? "hidden" : "unhidden",
+                            };
+                            params1.push(param);
+                        }
+                        return [4 /*yield*/, axios_1.default
+                                .post(this.feedUrl + "items", params1, { headers: headers })
+                                .then(function (d) {
+                                var _a;
+                                return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d }, "successfully added items in feed_admin_activate in gorse feed");
+                            })
+                                .catch(function (err) {
+                                var _a;
+                                (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.error({ err: err }, "failed to post vibes in gorse feed");
+                            })];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    GorseUtil.prototype.feed_admin_confirmUserAll_postProfPics = function (args) {
+        return __awaiter(this, void 0, void 0, function () {
+            var userId, profileStatus, userVibes, headers, params1, i, merge, param;
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        userId = args.userId, profileStatus = args.profileStatus, userVibes = args.userVibes;
+                        headers = { "Content-Type": "application/json" };
+                        params1 = [];
+                        for (i = 0; i < userVibes.length; i++) {
+                            merge = [];
+                            if (userVibes[i].vibeTags) {
+                                merge = __spreadArray(__spreadArray([], userVibes[i].vibeTags, true), userVibes[i].hashtags, true);
+                            }
+                            else {
+                                merge = __spreadArray([], userVibes[i].hashtags, true);
+                            }
+                            param = {
+                                Itemid: userVibes[i]._id.toString(),
+                                Labels: merge,
+                                Comment: userVibes[i].description
+                                    ? userVibes[i].description
+                                    : "some comment",
+                                Timestamp: userVibes[i].createdAt,
+                                Userid: userId,
+                                Status: profileStatus === "public" ? "public" : "private",
+                                AdminStatus: userVibes[i].adminHidden ? "hidden" : "unhidden",
+                            };
+                            params1.push(param);
+                        }
+                        return [4 /*yield*/, axios_1.default
+                                .post(this.feedUrl + "items", params1, { headers: headers })
+                                .then(function (d) {
+                                var _a;
+                                return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d }, "successfully added items in feed_admin_activate in gorse feed");
+                            })
+                                .catch(function (err) {
+                                var _a;
+                                (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.error({ err: err }, "failed to post vibes in gorse feed");
+                            })];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
     return GorseUtil;
 }());
 exports.default = GorseUtil;
