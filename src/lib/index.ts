@@ -50,7 +50,7 @@ class GorseUtil {
     for (let i = 0; i < likedByUserIds.length; i++) {
       axios
         .delete(this.feedUrl + `feedback/${likedByUserIds[i]}/${vibeId}`)
-        .then((d) =>
+        .then((d: any) =>
           this.logger?.info(
             { d, args },
             "successfully deleted a vibe in feed_deleteAVibe in gorse feed "
@@ -85,7 +85,7 @@ class GorseUtil {
       .patch(this.feedUrl + `item`, items, {
         headers: headers,
       })
-      .then((d) =>
+      .then((d: any) =>
         this.logger?.info(
           { d, args },
           `successfully patched a vibe to ${status} in feed_toggleSecretUser in gorse feed`
@@ -110,7 +110,7 @@ class GorseUtil {
 
     axios
       .delete(this.feedUrl + `user/${userId}`)
-      .then((d) =>
+      .then((d: any) =>
         this.logger?.info(
           { d, args },
           "successfully deleted a user in feed_deactivate in gorse feed "
@@ -129,7 +129,7 @@ class GorseUtil {
       p1.push(promise);
     }
     Promise.all(p1)
-      .then((d) => {
+      .then((d: any) => {
         this.logger?.info(
           { d, args },
           "successfully deleted items with promise in feed_deactivate in gorse feed"
@@ -161,7 +161,7 @@ class GorseUtil {
       p2.push(promise);
     }
     Promise.all(p2)
-      .then((d) => {
+      .then((d: any) => {
         this.logger?.info(
           { d, args },
           "successfully deleted feedbacks with promise in feed_deactivate in gorse feed"
@@ -194,7 +194,7 @@ class GorseUtil {
     };
     axios
       .post(this.feedUrl + `user`, user_params, { headers: headers })
-      .then((d) =>
+      .then((d: any) =>
         this.logger?.info(
           { d, args },
           "successfully posted a user in feed_setAccountStatus in gorse feed"
@@ -233,7 +233,7 @@ class GorseUtil {
     }
     axios
       .post(this.feedUrl + `items`, params1, { headers: headers })
-      .then((d) =>
+      .then((d: any) =>
         this.logger?.info(
           { d, args },
           "successfully posted items with promise in feed_setAccountStatus in gorse feed"
@@ -262,7 +262,7 @@ class GorseUtil {
       .post(this.feedUrl + `feedback`, params2, {
         headers: headers,
       })
-      .then((d) =>
+      .then((d: any) =>
         this.logger?.info(
           { d, args },
           "successfully added feedbacks in feed_setAccountStatus in gorse feed"
@@ -280,7 +280,7 @@ class GorseUtil {
     const { userId, vibes } = args;
     axios
       .delete(this.feedUrl + `user/${userId}`)
-      .then((d) =>
+      .then((d: any) =>
         this.logger?.info(
           { d, args },
           "successfully deleted a user in feed_deleteUser in gorse feed "
@@ -325,7 +325,7 @@ class GorseUtil {
 
     axios
       .delete(this.feedUrl + `user/${userId}`)
-      .then((d) =>
+      .then((d: any) =>
         this.logger?.info(
           { d, args },
           "successfully deleted a user in feed_recordScreenshot in gorse feed "
@@ -345,7 +345,7 @@ class GorseUtil {
       p1.push(promise);
     }
     Promise.all(p1)
-      .then((d) => {
+      .then((d: any) => {
         this.logger?.info(
           { d, args },
           "successfully deleted items with promise in feed_recordScreenshot in gorse feed"
@@ -377,7 +377,7 @@ class GorseUtil {
     };
     axios
       .post(this.feedUrl + `user`, user_params, { headers: headers })
-      .then((d) =>
+      .then((d: any) =>
         this.logger?.info(
           { d, args },
           "successfully deleted a user in feed_admin_activate in gorse feed "
@@ -417,7 +417,7 @@ class GorseUtil {
     }
     axios
       .post(this.feedUrl + `items`, params1, { headers: headers })
-      .then((d) =>
+      .then((d: any) =>
         this.logger?.info(
           { d, args },
           "successfully posted vibes in feed_admin_activate in gorse feed "
@@ -446,7 +446,7 @@ class GorseUtil {
       .post(this.feedUrl + `feedback`, params2, {
         headers: headers,
       })
-      .then((d) =>
+      .then((d: any) =>
         this.logger?.info(
           { d, args },
           "successfully posted feedbacks in feed_admin_activate in gorse feed "
@@ -479,7 +479,7 @@ class GorseUtil {
       .patch(this.feedUrl + `item`, item, {
         headers: headers,
       })
-      .then((d) =>
+      .then((d: any) =>
         this.logger?.info(
           { d, args },
           "successfully updated vibe status in feed_admin_hideVibeAsAdmin in gorse feed"
@@ -498,7 +498,7 @@ class GorseUtil {
 
     axios
       .delete(this.feedUrl + `item/${vibeId}`)
-      .then((d) =>
+      .then((d: any) =>
         this.logger?.info(
           { d, args },
           "successfully deleted vibe (item) in feed_admin_deleteVibeAsAdmin in gorse feed"
@@ -534,7 +534,7 @@ class GorseUtil {
     if (action === "delete") {
       axios
         .delete(this.feedUrl + `item/${vibeId}`)
-        .then((d) =>
+        .then((d: any) =>
           this.logger?.info(
             { d, args },
             "successfully deleted vibe (item) in feed_admin_deleteVibeAsAdmin in gorse feed"
@@ -567,7 +567,7 @@ class GorseUtil {
 
       axios
         .post(this.feedUrl + `item`, params, { headers: headers })
-        .then((d) =>
+        .then((d: any) =>
           this.logger?.info(
             { d, args },
             "successfully added vibe in feed_admin_suspendIt in gorse feed"
@@ -596,7 +596,7 @@ class GorseUtil {
         .post(this.feedUrl + `feedback`, params2, {
           headers: headers,
         })
-        .then((d) =>
+        .then((d: any) =>
           this.logger?.info(
             { d, args },
             "successfully added feedbacks in feed_admin_suspendIt in gorse feed"
@@ -622,7 +622,7 @@ class GorseUtil {
     const { userId, vibes } = args;
     axios
       .delete(this.feedUrl + `user/${userId}`)
-      .then((d) =>
+      .then((d: any) =>
         this.logger?.info(
           { d, args },
           "successfully deleted user in feed_admin_deactivateUser in gorse feed"
@@ -644,7 +644,7 @@ class GorseUtil {
     }
 
     Promise.all(p)
-      .then((d) =>
+      .then((d: any) =>
         this.logger?.info(
           { d, args },
           "successfully deleted items (vibes) from gorse feed in feed_admin_deactivateUser"
@@ -664,7 +664,7 @@ class GorseUtil {
     const { userId, vibes } = args;
     axios
       .delete(this.feedUrl + `user/${userId}`)
-      .then((d) =>
+      .then((d: any) =>
         this.logger?.info(
           { d, args },
           "successfully deleted user in feed_admin_deleteUser in gorse feed"
@@ -686,7 +686,7 @@ class GorseUtil {
     }
 
     Promise.all(p)
-      .then((d) =>
+      .then((d: any) =>
         this.logger?.info(
           { d, args },
           "successfully deleted items (vibes) from gorse feed in feed_admin_deleteUser"
@@ -717,7 +717,7 @@ class GorseUtil {
     };
     axios
       .post(this.feedUrl + `user`, user_params, { headers: headers })
-      .then((d) =>
+      .then((d: any) =>
         this.logger?.info(
           { d, args },
           "successfully added user in feed_admin_confirmUser_insertUser in gorse feed"
@@ -765,7 +765,7 @@ class GorseUtil {
     }
     axios
       .post(this.feedUrl + `items`, params1, { headers: headers })
-      .then((d) =>
+      .then((d: any) =>
         this.logger?.info(
           { d, args },
           "successfully added items in feed_admin_confirmUser_postProfPics in gorse feed"
@@ -813,7 +813,7 @@ class GorseUtil {
     }
     axios
       .post(this.feedUrl + `items`, params1, { headers: headers })
-      .then((d) =>
+      .then((d: any) =>
         this.logger?.info(
           { d, args },
           "successfully added items in feed_admin_confirmUserAll_postProfPics in gorse feed"
@@ -844,7 +844,7 @@ class GorseUtil {
       .post(this.feedUrl + `feedback`, params, {
         headers: headers,
       })
-      .then((d) =>
+      .then((d: any) =>
         this.logger?.info(
           { d, args },
           "successfully added like feedback in feed_likeVibe in gorse feed"
@@ -873,7 +873,7 @@ class GorseUtil {
     axios
       .post(this.feedUrl + `feedback`, params, { headers: headers })
 
-      .then((d) =>
+      .then((d: any) =>
         this.logger?.info(
           { d, args },
           "successfully added click feedback in feed_postClick in gorse feed"
@@ -904,7 +904,7 @@ class GorseUtil {
       .post(this.feedUrl + `feedback`, params, {
         headers: headers,
       })
-      .then((d) =>
+      .then((d: any) =>
         this.logger?.info(
           { d, args },
           "successfully added read feedback in feed_postRead in gorse feed"
