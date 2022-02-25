@@ -105,5 +105,17 @@ declare class GorseUtil {
         userVibes: Record<feed_set_account_status_user_vibes, string>[];
         profileStatus: string;
     }): Promise<void>;
+    feed_likeVibe(args: {
+        userId: string;
+        vibeId: string;
+    }): Promise<void>;
+    feed_postClick(args: {
+        userId: string;
+        itemId: string;
+    }): Promise<void>;
+    feed_postRead(args: {
+        userId: string;
+        itemId: string;
+    }): Promise<void>;
 }
 export default GorseUtil;

@@ -43,13 +43,19 @@ class GorseUtil {
     this.logger?.info({ args }, "feed_deleteAVibe");
     const { vibeId, likedByUserIds } = args;
 
-    await axios.delete(this.feedUrl + `item/${vibeId}`).catch((e) => {
+    axios.delete(this.feedUrl + `item/${vibeId}`).catch((e) => {
       this.logger?.error({ err: e }, "failed to delete vibe from gorse feed");
     });
 
     for (let i = 0; i < likedByUserIds.length; i++) {
-      const result = await axios
+      axios
         .delete(this.feedUrl + `feedback/${likedByUserIds[i]}/${vibeId}`)
+        .then((d) =>
+          this.logger?.info(
+            { d, args },
+            "successfully deleted a vibe in feed_deleteAVibe in gorse feed "
+          )
+        )
         .catch((e) => {
           this.logger?.error(
             { err: e },
@@ -75,14 +81,20 @@ class GorseUtil {
       items.push(item);
     }
     const headers = { "Content-Type": "application/json" };
-    const result = await axios
+    axios
       .patch(this.feedUrl + `item`, items, {
         headers: headers,
       })
+      .then((d) =>
+        this.logger?.info(
+          { d, args },
+          `successfully patched a vibe to ${status} in feed_toggleSecretUser in gorse feed`
+        )
+      )
       .catch((err) => {
         this.logger?.error(
           { err: err },
-          `failed to patch vibe status to ${status} in gorse feed`
+          `failed to patch vibe status to ${status} in feed_toggleSecretUser in gorse feed`
         );
       });
   }
@@ -96,9 +108,20 @@ class GorseUtil {
     const { userId, vibes, likeIds, ownLikes } = args;
     this.logger?.info({ args }, "feed_deactivate");
 
-    await axios.delete(this.feedUrl + `user/${userId}`).catch((err) => {
-      this.logger?.error({ err: err }, `failed to delete user in gorse feed`);
-    });
+    axios
+      .delete(this.feedUrl + `user/${userId}`)
+      .then((d) =>
+        this.logger?.info(
+          { d, args },
+          "successfully deleted a user in feed_deactivate in gorse feed "
+        )
+      )
+      .catch((err) => {
+        this.logger?.error(
+          { err: err },
+          `failed to delete user in feed_deactivate in gorse feed`
+        );
+      });
     let p1 = [];
 
     for (let i = 0; i < vibes.length; i++) {
@@ -106,16 +129,16 @@ class GorseUtil {
       p1.push(promise);
     }
     Promise.all(p1)
-      .then((values) => {
+      .then((d) => {
         this.logger?.info(
-          { values },
-          "successfully deleted items from gorse feed"
+          { d, args },
+          "successfully deleted items with promise in feed_deactivate in gorse feed"
         );
       })
       .catch((err) => {
         this.logger?.error(
           { err: err },
-          `failed to delete items (feed) in gorse feed`
+          `failed to delete items with promise in feed_deactivate in gorse feed`
         );
       });
     let p2 = [];
@@ -138,16 +161,16 @@ class GorseUtil {
       p2.push(promise);
     }
     Promise.all(p2)
-      .then((values) => {
+      .then((d) => {
         this.logger?.info(
-          { values },
-          "successfully deleted feedbacks from gorse feed"
+          { d, args },
+          "successfully deleted feedbacks with promise in feed_deactivate in gorse feed"
         );
       })
       .catch((err) => {
         this.logger?.error(
           { err: err },
-          `failed to delete feedbacks (feed) in gorse feed`
+          `failed to delete feedbacks with promise in feed_deactivate in gorse feed`
         );
       });
   }
@@ -169,16 +192,19 @@ class GorseUtil {
       Subscribe: hold,
       Status: "public",
     };
-    await axios
+    axios
       .post(this.feedUrl + `user`, user_params, { headers: headers })
       .then((d) =>
         this.logger?.info(
-          { data: d },
-          "successfully added user in feed_setAccountStatus"
+          { d, args },
+          "successfully posted a user in feed_setAccountStatus in gorse feed"
         )
       )
       .catch((e) =>
-        this.logger?.error({ err: e }, `failed to post user in gorse feed`)
+        this.logger?.error(
+          { err: e },
+          `failed to post a user in feed_setAccountStatus in gorse feed`
+        )
       );
     let params1 = [];
     for (let i = 0; i < userVibes.length; i++) {
@@ -205,16 +231,19 @@ class GorseUtil {
       };
       params1.push(param);
     }
-    await axios
+    axios
       .post(this.feedUrl + `items`, params1, { headers: headers })
       .then((d) =>
         this.logger?.info(
-          { data: d },
-          "successfully added items in feed_setAccountStatus"
+          { d, args },
+          "successfully posted items with promise in feed_setAccountStatus in gorse feed"
         )
       )
       .catch((err) => {
-        this.logger?.error({ err: err }, `failed to post vibes in gorse feed`);
+        this.logger?.error(
+          { err: err },
+          `failed to post vibes with promise in feed_setAccountStatus in gorse feed`
+        );
       });
 
     let params2 = [];
@@ -229,38 +258,38 @@ class GorseUtil {
       };
       params2.push(param);
     }
-    await axios
+    axios
       .post(this.feedUrl + `feedback`, params2, {
         headers: headers,
       })
       .then((d) =>
         this.logger?.info(
-          { data: d },
-          "successfully added feedbacks in feed_setAccountStatus"
+          { d, args },
+          "successfully added feedbacks in feed_setAccountStatus in gorse feed"
         )
       )
       .catch((err) =>
         this.logger?.error(
           { err },
-          "failed to post feedbacks in feed_setAccountStatus"
+          "failed to post feedbacks in feed_setAccountStatus in gorse feed"
         )
       );
   }
 
   async feed_deleteUser(args: { userId: string; vibes: { _id: string }[] }) {
     const { userId, vibes } = args;
-    const user_result = await axios
+    axios
       .delete(this.feedUrl + `user/${userId}`)
       .then((d) =>
         this.logger?.info(
-          { data: d },
-          "successfully deleted user from gorse in feed_deleteUser"
+          { d, args },
+          "successfully deleted a user in feed_deleteUser in gorse feed "
         )
       )
       .catch((err) =>
         this.logger?.error(
           { err },
-          "failed to delete user from gorse in feed_deleteUser"
+          "failed to delete user from gorse in feed_deleteUser in gorse feed"
         )
       );
 
@@ -276,13 +305,13 @@ class GorseUtil {
       .then((d) =>
         this.logger?.info(
           { data: d },
-          "successfully deleted items (vibes) from gorse in feed_deleteUser"
+          "successfully deleted items (vibes) with promise in feed_deleteUser in gorse feed"
         )
       )
       .catch((err) =>
         this.logger?.error(
           { err },
-          "failed to delete items (vibes) from gorse in feed_deleteUser"
+          "failed to delete items (vibes) in feed_deleteUser in gorse feed"
         )
       );
   }
@@ -294,12 +323,12 @@ class GorseUtil {
     const { userId, vibes } = args;
     this.logger?.info({ args }, "feed_recordScreenshot");
 
-    await axios
+    axios
       .delete(this.feedUrl + `user/${userId}`)
       .then((d) =>
         this.logger?.info(
-          { data: d },
-          "successfully deleted user from gorse in feed_recordScreenshot"
+          { d, args },
+          "successfully deleted a user in feed_recordScreenshot in gorse feed "
         )
       )
       .catch((err) => {
@@ -316,16 +345,16 @@ class GorseUtil {
       p1.push(promise);
     }
     Promise.all(p1)
-      .then((values) => {
+      .then((d) => {
         this.logger?.info(
-          { values },
-          "successfully deleted items in feed_recordScreenshot from gorse feed"
+          { d, args },
+          "successfully deleted items with promise in feed_recordScreenshot in gorse feed"
         );
       })
       .catch((err) => {
         this.logger?.error(
           { err: err },
-          `failed to delete items (feed) in feed_recordScreenshot in gorse feed`
+          `failed to delete items (feed) with promise in feed_recordScreenshot in gorse feed`
         );
       });
   }
@@ -346,12 +375,12 @@ class GorseUtil {
       Subscribe: hold,
       Status: profileStatus || "public",
     };
-    await axios
+    axios
       .post(this.feedUrl + `user`, user_params, { headers: headers })
       .then((d) =>
         this.logger?.info(
-          { data: d },
-          "successfully added user in feed_admin_activate"
+          { d, args },
+          "successfully deleted a user in feed_admin_activate in gorse feed "
         )
       )
       .catch((e) =>
@@ -386,16 +415,19 @@ class GorseUtil {
       };
       params1.push(param);
     }
-    await axios
+    axios
       .post(this.feedUrl + `items`, params1, { headers: headers })
       .then((d) =>
         this.logger?.info(
-          { data: d },
-          "successfully added items in feed_admin_activate in gorse feed"
+          { d, args },
+          "successfully posted vibes in feed_admin_activate in gorse feed "
         )
       )
       .catch((err) => {
-        this.logger?.error({ err: err }, `failed to post vibes in gorse feed`);
+        this.logger?.error(
+          { err: err },
+          `failed to post vibes in feed_admin_activate in gorse feed`
+        );
       });
 
     let params2 = [];
@@ -410,14 +442,14 @@ class GorseUtil {
       };
       params2.push(param);
     }
-    await axios
+    axios
       .post(this.feedUrl + `feedback`, params2, {
         headers: headers,
       })
       .then((d) =>
         this.logger?.info(
-          { data: d },
-          "successfully added feedbacks in feed_admin_activate in gorse feed"
+          { d, args },
+          "successfully posted feedbacks in feed_admin_activate in gorse feed "
         )
       )
       .catch((err) =>
@@ -443,13 +475,13 @@ class GorseUtil {
       },
     ];
 
-    const result = await axios
+    axios
       .patch(this.feedUrl + `item`, item, {
         headers: headers,
       })
       .then((d) =>
         this.logger?.info(
-          { data: d },
+          { d, args },
           "successfully updated vibe status in feed_admin_hideVibeAsAdmin in gorse feed"
         )
       )
@@ -464,11 +496,11 @@ class GorseUtil {
   async feed_admin_deleteVibeAsAdmin(args: { vibeId: string }) {
     const { vibeId } = args;
 
-    const result = await axios
+    axios
       .delete(this.feedUrl + `item/${vibeId}`)
       .then((d) =>
         this.logger?.info(
-          { data: d },
+          { d, args },
           "successfully deleted vibe (item) in feed_admin_deleteVibeAsAdmin in gorse feed"
         )
       )
@@ -500,11 +532,11 @@ class GorseUtil {
       "Content-Type": "application/json",
     };
     if (action === "delete") {
-      const result = await axios
+      axios
         .delete(this.feedUrl + `item/${vibeId}`)
         .then((d) =>
           this.logger?.info(
-            { data: d },
+            { d, args },
             "successfully deleted vibe (item) in feed_admin_deleteVibeAsAdmin in gorse feed"
           )
         )
@@ -533,11 +565,11 @@ class GorseUtil {
         AdminStatus: vibe.adminHidden ? "hidden" : "unhidden",
       };
 
-      await axios
+      axios
         .post(this.feedUrl + `item`, params, { headers: headers })
         .then((d) =>
           this.logger?.info(
-            { data: d },
+            { d, args },
             "successfully added vibe in feed_admin_suspendIt in gorse feed"
           )
         )
@@ -560,13 +592,13 @@ class GorseUtil {
         };
         params2.push(param);
       }
-      await axios
+      axios
         .post(this.feedUrl + `feedback`, params2, {
           headers: headers,
         })
         .then((d) =>
           this.logger?.info(
-            { data: d },
+            { d, args },
             "successfully added feedbacks in feed_admin_suspendIt in gorse feed"
           )
         )
@@ -588,11 +620,11 @@ class GorseUtil {
     vibes: { _id: string }[];
   }) {
     const { userId, vibes } = args;
-    const user_result = await axios
+    axios
       .delete(this.feedUrl + `user/${userId}`)
       .then((d) =>
         this.logger?.info(
-          { data: d },
+          { d, args },
           "successfully deleted user in feed_admin_deactivateUser in gorse feed"
         )
       )
@@ -614,7 +646,7 @@ class GorseUtil {
     Promise.all(p)
       .then((d) =>
         this.logger?.info(
-          { data: d },
+          { d, args },
           "successfully deleted items (vibes) from gorse feed in feed_admin_deactivateUser"
         )
       )
@@ -630,11 +662,11 @@ class GorseUtil {
     vibes: { _id: string }[];
   }) {
     const { userId, vibes } = args;
-    const user_result = await axios
+    axios
       .delete(this.feedUrl + `user/${userId}`)
       .then((d) =>
         this.logger?.info(
-          { data: d },
+          { d, args },
           "successfully deleted user in feed_admin_deleteUser in gorse feed"
         )
       )
@@ -656,7 +688,7 @@ class GorseUtil {
     Promise.all(p)
       .then((d) =>
         this.logger?.info(
-          { data: d },
+          { d, args },
           "successfully deleted items (vibes) from gorse feed in feed_admin_deleteUser"
         )
       )
@@ -683,18 +715,18 @@ class GorseUtil {
       Subscribe: hold,
       Status: profileStatus || "public",
     };
-    await axios
+    axios
       .post(this.feedUrl + `user`, user_params, { headers: headers })
       .then((d) =>
         this.logger?.info(
-          { data: d },
-          "successfully added user in feed_admin_activate"
+          { d, args },
+          "successfully added user in feed_admin_confirmUser_insertUser in gorse feed"
         )
       )
       .catch((e) =>
         this.logger?.error(
           { err: e },
-          `failed to post user in feed_admin_activate in gorse feed`
+          `failed to post user in feed_admin_confirmUser_insertUser in gorse feed`
         )
       );
   }
@@ -731,16 +763,19 @@ class GorseUtil {
       };
       params1.push(param);
     }
-    await axios
+    axios
       .post(this.feedUrl + `items`, params1, { headers: headers })
       .then((d) =>
         this.logger?.info(
-          { data: d },
-          "successfully added items in feed_admin_activate in gorse feed"
+          { d, args },
+          "successfully added items in feed_admin_confirmUser_postProfPics in gorse feed"
         )
       )
       .catch((err) => {
-        this.logger?.error({ err: err }, `failed to post vibes in gorse feed`);
+        this.logger?.error(
+          { err: err },
+          `failed to post vibes in feed_admin_confirmUser_postProfPics in gorse feed`
+        );
       });
   }
   async feed_admin_confirmUserAll_postProfPics(args: {
@@ -776,16 +811,110 @@ class GorseUtil {
       };
       params1.push(param);
     }
-    await axios
+    axios
       .post(this.feedUrl + `items`, params1, { headers: headers })
       .then((d) =>
         this.logger?.info(
-          { data: d },
-          "successfully added items in feed_admin_activate in gorse feed"
+          { d, args },
+          "successfully added items in feed_admin_confirmUserAll_postProfPics in gorse feed"
         )
       )
       .catch((err) => {
-        this.logger?.error({ err: err }, `failed to post vibes in gorse feed`);
+        this.logger?.error(
+          { err: err },
+          `failed to post vibes in feed_admin_confirmUserAll_postProfPics in gorse feed`
+        );
+      });
+  }
+  async feed_likeVibe(args: { userId: string; vibeId: string }) {
+    const { userId, vibeId } = args;
+
+    const headers = { "Content-Type": "application/json" };
+    const params = [
+      {
+        feedbacktype: "like",
+        userid: userId,
+        itemid: vibeId,
+        timestamp: new Date().toISOString(),
+        comment: "some comment",
+      },
+    ];
+
+    axios
+      .post(this.feedUrl + `feedback`, params, {
+        headers: headers,
+      })
+      .then((d) =>
+        this.logger?.info(
+          { d, args },
+          "successfully added like feedback in feed_likeVibe in gorse feed"
+        )
+      )
+      .catch((err) => {
+        this.logger?.error(
+          { err: err },
+          `failed to post like feedback in feed_likeVibe in gorse feed`
+        );
+      });
+  }
+  async feed_postClick(args: { userId: string; itemId: string }) {
+    const { userId, itemId } = args;
+    const headers = { "Content-Type": "application/json" };
+    const params = [
+      {
+        feedbacktype: "click",
+        userid: userId,
+        itemid: itemId,
+        timestamp: new Date().toISOString(),
+        comment: "some comment",
+      },
+    ];
+
+    axios
+      .post(this.feedUrl + `feedback`, params, { headers: headers })
+
+      .then((d) =>
+        this.logger?.info(
+          { d, args },
+          "successfully added click feedback in feed_postClick in gorse feed"
+        )
+      )
+      .catch((err) => {
+        this.logger?.error(
+          { err: err },
+          `failed to post click feedback in feed_postClick in gorse feed`
+        );
+      });
+  }
+  async feed_postRead(args: { userId: string; itemId: string }) {
+    const { userId, itemId } = args;
+
+    const headers = { "Content-Type": "application/json" };
+    const params = [
+      {
+        userid: userId,
+        itemid: itemId,
+        feedbacktype: "read",
+        timestamp: new Date().toISOString(),
+        comment: "read feedback",
+      },
+    ];
+
+    axios
+      .post(this.feedUrl + `feedback`, params, {
+        headers: headers,
+      })
+      .then((d) =>
+        this.logger?.info(
+          { d, args },
+          "successfully added read feedback in feed_postRead in gorse feed"
+        )
+      )
+      .catch((err) => {
+        this.logger?.error(
+          { err: err },
+          `failed to post read feedback in feed_postRead in gorse feed`
+        );
       });
   }
 }
