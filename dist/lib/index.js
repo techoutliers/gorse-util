@@ -68,20 +68,26 @@ var GorseUtil = /** @class */ (function () {
             return __generator(this, function (_b) {
                 (_a = this.logger) === null || _a === void 0 ? void 0 : _a.info({ args: args }, "feed_deleteAVibe");
                 vibeId = args.vibeId, likedByUserIds = args.likedByUserIds;
-                axios_1.default.delete(this.feedUrl + "item/".concat(vibeId)).catch(function (e) {
+                axios_1.default
+                    .delete(this.feedUrl + "item/".concat(vibeId))
+                    .then(function (d) {
                     var _a;
-                    (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.error({ err: e }, "failed to delete vibe from gorse feed");
+                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d === null || d === void 0 ? void 0 : d.data, args: args }, "successfully to delete vibe in feed_deleteAVibe in gorse feed ");
+                })
+                    .catch(function (e) {
+                    var _a;
+                    (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.error({ err: e }, "failed to delete vibe in feed_deleteAVibe in gorse feed");
                 });
                 for (i = 0; i < likedByUserIds.length; i++) {
                     axios_1.default
                         .delete(this.feedUrl + "feedback/".concat(likedByUserIds[i], "/").concat(vibeId))
                         .then(function (d) {
                         var _a;
-                        return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ d: d, args: args }, "successfully deleted a vibe in feed_deleteAVibe in gorse feed ");
+                        return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d === null || d === void 0 ? void 0 : d.data, args: args }, "successfully deleted a vibe in feed_deleteAVibe in gorse feed ");
                     })
                         .catch(function (e) {
                         var _a;
-                        (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.error({ err: e }, "failed to delete vibe feedback from gorse feed");
+                        (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.error({ err: e }, "failed to delete vibe feedback in feed_deleteAVibe in gorse feed");
                     });
                 }
                 return [2 /*return*/];
@@ -112,7 +118,7 @@ var GorseUtil = /** @class */ (function () {
                 })
                     .then(function (d) {
                     var _a;
-                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ d: d, args: args }, "successfully patched a vibe to ".concat(status, " in feed_toggleSecretUser in gorse feed"));
+                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d === null || d === void 0 ? void 0 : d.data, args: args }, "successfully patched a vibe to ".concat(status, " in feed_toggleSecretUser in gorse feed"));
                 })
                     .catch(function (err) {
                     var _a;
@@ -134,7 +140,7 @@ var GorseUtil = /** @class */ (function () {
                     .delete(this.feedUrl + "user/".concat(userId))
                     .then(function (d) {
                     var _a;
-                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ d: d, args: args }, "successfully deleted a user in feed_deactivate in gorse feed ");
+                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d === null || d === void 0 ? void 0 : d.data, args: args }, "successfully deleted a user in feed_deactivate in gorse feed ");
                 })
                     .catch(function (err) {
                     var _a;
@@ -148,7 +154,7 @@ var GorseUtil = /** @class */ (function () {
                 Promise.all(p1)
                     .then(function (d) {
                     var _a;
-                    (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ d: d, args: args }, "successfully deleted items with promise in feed_deactivate in gorse feed");
+                    (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d === null || d === void 0 ? void 0 : d.data, args: args }, "successfully deleted items with promise in feed_deactivate in gorse feed");
                 })
                     .catch(function (err) {
                     var _a;
@@ -169,7 +175,7 @@ var GorseUtil = /** @class */ (function () {
                 Promise.all(p2)
                     .then(function (d) {
                     var _a;
-                    (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ d: d, args: args }, "successfully deleted feedbacks with promise in feed_deactivate in gorse feed");
+                    (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d === null || d === void 0 ? void 0 : d.data, args: args }, "successfully deleted feedbacks with promise in feed_deactivate in gorse feed");
                 })
                     .catch(function (err) {
                     var _a;
@@ -198,7 +204,7 @@ var GorseUtil = /** @class */ (function () {
                     .post(this.feedUrl + "user", user_params, { headers: headers })
                     .then(function (d) {
                     var _a;
-                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ d: d, args: args }, "successfully posted a user in feed_setAccountStatus in gorse feed");
+                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d === null || d === void 0 ? void 0 : d.data, args: args }, "successfully posted a user in feed_setAccountStatus in gorse feed");
                 })
                     .catch(function (e) {
                     var _a;
@@ -230,7 +236,7 @@ var GorseUtil = /** @class */ (function () {
                     .post(this.feedUrl + "items", params1, { headers: headers })
                     .then(function (d) {
                     var _a;
-                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ d: d, args: args }, "successfully posted items with promise in feed_setAccountStatus in gorse feed");
+                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d === null || d === void 0 ? void 0 : d.data, args: args }, "successfully posted items with promise in feed_setAccountStatus in gorse feed");
                 })
                     .catch(function (err) {
                     var _a;
@@ -253,7 +259,7 @@ var GorseUtil = /** @class */ (function () {
                 })
                     .then(function (d) {
                     var _a;
-                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ d: d, args: args }, "successfully added feedbacks in feed_setAccountStatus in gorse feed");
+                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d === null || d === void 0 ? void 0 : d.data, args: args }, "successfully added feedbacks in feed_setAccountStatus in gorse feed");
                 })
                     .catch(function (err) {
                     var _a;
@@ -273,7 +279,7 @@ var GorseUtil = /** @class */ (function () {
                     .delete(this.feedUrl + "user/".concat(userId))
                     .then(function (d) {
                     var _a;
-                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ d: d, args: args }, "successfully deleted a user in feed_deleteUser in gorse feed ");
+                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d === null || d === void 0 ? void 0 : d.data, args: args }, "successfully deleted a user in feed_deleteUser in gorse feed ");
                 })
                     .catch(function (err) {
                     var _a;
@@ -287,7 +293,7 @@ var GorseUtil = /** @class */ (function () {
                 Promise.all(p)
                     .then(function (d) {
                     var _a;
-                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d }, "successfully deleted items (vibes) with promise in feed_deleteUser in gorse feed");
+                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d.map(function (i) { return i === null || i === void 0 ? void 0 : i.data; }) }, "successfully deleted items (vibes) with promise in feed_deleteUser in gorse feed");
                 })
                     .catch(function (err) {
                     var _a;
@@ -309,7 +315,7 @@ var GorseUtil = /** @class */ (function () {
                     .delete(this.feedUrl + "user/".concat(userId))
                     .then(function (d) {
                     var _a;
-                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ d: d, args: args }, "successfully deleted a user in feed_recordScreenshot in gorse feed ");
+                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d === null || d === void 0 ? void 0 : d.data, args: args }, "successfully deleted a user in feed_recordScreenshot in gorse feed ");
                 })
                     .catch(function (err) {
                     var _a;
@@ -323,7 +329,7 @@ var GorseUtil = /** @class */ (function () {
                 Promise.all(p1)
                     .then(function (d) {
                     var _a;
-                    (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ d: d, args: args }, "successfully deleted items with promise in feed_recordScreenshot in gorse feed");
+                    (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d.map(function (i) { return i === null || i === void 0 ? void 0 : i.data; }), args: args }, "successfully deleted items with promise in feed_recordScreenshot in gorse feed");
                 })
                     .catch(function (err) {
                     var _a;
@@ -352,7 +358,7 @@ var GorseUtil = /** @class */ (function () {
                     .post(this.feedUrl + "user", user_params, { headers: headers })
                     .then(function (d) {
                     var _a;
-                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ d: d, args: args }, "successfully deleted a user in feed_admin_activate in gorse feed ");
+                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d === null || d === void 0 ? void 0 : d.data, args: args }, "successfully deleted a user in feed_admin_activate in gorse feed ");
                 })
                     .catch(function (e) {
                     var _a;
@@ -384,7 +390,7 @@ var GorseUtil = /** @class */ (function () {
                     .post(this.feedUrl + "items", params1, { headers: headers })
                     .then(function (d) {
                     var _a;
-                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ d: d, args: args }, "successfully posted vibes in feed_admin_activate in gorse feed ");
+                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d === null || d === void 0 ? void 0 : d.data, args: args }, "successfully posted vibes in feed_admin_activate in gorse feed ");
                 })
                     .catch(function (err) {
                     var _a;
@@ -407,7 +413,7 @@ var GorseUtil = /** @class */ (function () {
                 })
                     .then(function (d) {
                     var _a;
-                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ d: d, args: args }, "successfully posted feedbacks in feed_admin_activate in gorse feed ");
+                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d === null || d === void 0 ? void 0 : d.data, args: args }, "successfully posted feedbacks in feed_admin_activate in gorse feed ");
                 })
                     .catch(function (err) {
                     var _a;
@@ -428,7 +434,6 @@ var GorseUtil = /** @class */ (function () {
                     {
                         itemid: vibeId,
                         adminstatus: adminStatus,
-                        status: "",
                     },
                 ];
                 axios_1.default
@@ -437,7 +442,7 @@ var GorseUtil = /** @class */ (function () {
                 })
                     .then(function (d) {
                     var _a;
-                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ d: d, args: args }, "successfully updated vibe status in feed_admin_hideVibeAsAdmin in gorse feed");
+                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d === null || d === void 0 ? void 0 : d.data, args: args }, "successfully updated vibe status in feed_admin_hideVibeAsAdmin in gorse feed");
                 })
                     .catch(function (err) {
                     var _a;
@@ -457,7 +462,7 @@ var GorseUtil = /** @class */ (function () {
                     .delete(this.feedUrl + "item/".concat(vibeId))
                     .then(function (d) {
                     var _a;
-                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ d: d, args: args }, "successfully deleted vibe (item) in feed_admin_deleteVibeAsAdmin in gorse feed");
+                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d === null || d === void 0 ? void 0 : d.data, args: args }, "successfully deleted vibe (item) in feed_admin_deleteVibeAsAdmin in gorse feed");
                 })
                     .catch(function (err) {
                     var _a;
@@ -482,7 +487,7 @@ var GorseUtil = /** @class */ (function () {
                         .delete(this.feedUrl + "item/".concat(vibeId))
                         .then(function (d) {
                         var _a;
-                        return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ d: d, args: args }, "successfully deleted vibe (item) in feed_admin_deleteVibeAsAdmin in gorse feed");
+                        return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d === null || d === void 0 ? void 0 : d.data, args: args }, "successfully deleted vibe (item) in feed_admin_deleteVibeAsAdmin in gorse feed");
                     })
                         .catch(function (err) {
                         var _a;
@@ -511,7 +516,7 @@ var GorseUtil = /** @class */ (function () {
                         .post(this.feedUrl + "item", params, { headers: headers })
                         .then(function (d) {
                         var _a;
-                        return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ d: d, args: args }, "successfully added vibe in feed_admin_suspendIt in gorse feed");
+                        return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d === null || d === void 0 ? void 0 : d.data, args: args }, "successfully added vibe in feed_admin_suspendIt in gorse feed");
                     })
                         .catch(function (err) {
                         var _a;
@@ -534,7 +539,7 @@ var GorseUtil = /** @class */ (function () {
                     })
                         .then(function (d) {
                         var _a;
-                        return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ d: d, args: args }, "successfully added feedbacks in feed_admin_suspendIt in gorse feed");
+                        return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d === null || d === void 0 ? void 0 : d.data, args: args }, "successfully added feedbacks in feed_admin_suspendIt in gorse feed");
                     })
                         .catch(function (err) {
                         var _a;
@@ -558,7 +563,7 @@ var GorseUtil = /** @class */ (function () {
                     .delete(this.feedUrl + "user/".concat(userId))
                     .then(function (d) {
                     var _a;
-                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ d: d, args: args }, "successfully deleted user in feed_admin_deactivateUser in gorse feed");
+                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d === null || d === void 0 ? void 0 : d.data, args: args }, "successfully deleted user in feed_admin_deactivateUser in gorse feed");
                 })
                     .catch(function (err) {
                     var _a;
@@ -572,7 +577,7 @@ var GorseUtil = /** @class */ (function () {
                 Promise.all(p)
                     .then(function (d) {
                     var _a;
-                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ d: d, args: args }, "successfully deleted items (vibes) from gorse feed in feed_admin_deactivateUser");
+                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d === null || d === void 0 ? void 0 : d.data, args: args }, "successfully deleted items (vibes) from gorse feed in feed_admin_deactivateUser");
                 })
                     .catch(function (err) {
                     var _a;
@@ -592,7 +597,7 @@ var GorseUtil = /** @class */ (function () {
                     .delete(this.feedUrl + "user/".concat(userId))
                     .then(function (d) {
                     var _a;
-                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ d: d, args: args }, "successfully deleted user in feed_admin_deleteUser in gorse feed");
+                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d === null || d === void 0 ? void 0 : d.data, args: args }, "successfully deleted user in feed_admin_deleteUser in gorse feed");
                 })
                     .catch(function (err) {
                     var _a;
@@ -606,7 +611,7 @@ var GorseUtil = /** @class */ (function () {
                 Promise.all(p)
                     .then(function (d) {
                     var _a;
-                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ d: d, args: args }, "successfully deleted items (vibes) from gorse feed in feed_admin_deleteUser");
+                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d === null || d === void 0 ? void 0 : d.data, args: args }, "successfully deleted items (vibes) from gorse feed in feed_admin_deleteUser");
                 })
                     .catch(function (err) {
                     var _a;
@@ -617,11 +622,13 @@ var GorseUtil = /** @class */ (function () {
         });
     };
     GorseUtil.prototype.feed_admin_confirmUser_insertUser = function (args) {
+        var _a;
         return __awaiter(this, void 0, void 0, function () {
             var userId, profileStatus, headers, hold, user_params;
             var _this = this;
-            return __generator(this, function (_a) {
+            return __generator(this, function (_b) {
                 userId = args.userId, profileStatus = args.profileStatus;
+                (_a = this.logger) === null || _a === void 0 ? void 0 : _a.info({ args: args }, "feed_admin_confirmUser_insertUser");
                 headers = { "Content-Type": "application/json" };
                 hold = [""];
                 user_params = {
@@ -635,7 +642,7 @@ var GorseUtil = /** @class */ (function () {
                     .post(this.feedUrl + "user", user_params, { headers: headers })
                     .then(function (d) {
                     var _a;
-                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ d: d, args: args }, "successfully added user in feed_admin_confirmUser_insertUser in gorse feed");
+                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d === null || d === void 0 ? void 0 : d.data, args: args }, "successfully added user in feed_admin_confirmUser_insertUser in gorse feed");
                 })
                     .catch(function (e) {
                     var _a;
@@ -646,11 +653,13 @@ var GorseUtil = /** @class */ (function () {
         });
     };
     GorseUtil.prototype.feed_admin_confirmUser_postProfPics = function (args) {
+        var _a;
         return __awaiter(this, void 0, void 0, function () {
             var userId, profileStatus, userVibes, headers, params1, i, merge, param;
             var _this = this;
-            return __generator(this, function (_a) {
+            return __generator(this, function (_b) {
                 userId = args.userId, profileStatus = args.profileStatus, userVibes = args.userVibes;
+                (_a = this.logger) === null || _a === void 0 ? void 0 : _a.info({ args: args }, "feed_admin_confirmUser_postProfPics");
                 headers = { "Content-Type": "application/json" };
                 params1 = [];
                 for (i = 0; i < userVibes.length; i++) {
@@ -678,7 +687,7 @@ var GorseUtil = /** @class */ (function () {
                     .post(this.feedUrl + "items", params1, { headers: headers })
                     .then(function (d) {
                     var _a;
-                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ d: d, args: args }, "successfully added items in feed_admin_confirmUser_postProfPics in gorse feed");
+                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d === null || d === void 0 ? void 0 : d.data, args: args }, "successfully added items in feed_admin_confirmUser_postProfPics in gorse feed");
                 })
                     .catch(function (err) {
                     var _a;
@@ -689,45 +698,53 @@ var GorseUtil = /** @class */ (function () {
         });
     };
     GorseUtil.prototype.feed_admin_confirmUserAll_postProfPics = function (args) {
+        var _a;
         return __awaiter(this, void 0, void 0, function () {
             var userId, profileStatus, userVibes, headers, params1, i, merge, param;
             var _this = this;
-            return __generator(this, function (_a) {
-                userId = args.userId, profileStatus = args.profileStatus, userVibes = args.userVibes;
-                headers = { "Content-Type": "application/json" };
-                params1 = [];
-                for (i = 0; i < userVibes.length; i++) {
-                    merge = [];
-                    if (userVibes[i].vibeTags) {
-                        merge = __spreadArray(__spreadArray([], userVibes[i].vibeTags, true), userVibes[i].hashtags, true);
-                    }
-                    else {
-                        merge = __spreadArray([], userVibes[i].hashtags, true);
-                    }
-                    param = {
-                        Itemid: userVibes[i]._id.toString(),
-                        Labels: merge,
-                        Comment: userVibes[i].description
-                            ? userVibes[i].description
-                            : "some comment",
-                        Timestamp: userVibes[i].createdAt,
-                        Userid: userId,
-                        Status: profileStatus === "public" ? "public" : "private",
-                        AdminStatus: userVibes[i].adminHidden ? "hidden" : "unhidden",
-                    };
-                    params1.push(param);
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        (_a = this.logger) === null || _a === void 0 ? void 0 : _a.info({ args: args }, "feed_admin_confirmUserAll_postProfPics");
+                        userId = args.userId, profileStatus = args.profileStatus, userVibes = args.userVibes;
+                        return [4 /*yield*/, this.feed_admin_confirmUser_insertUser({ userId: userId, profileStatus: profileStatus })];
+                    case 1:
+                        _b.sent();
+                        headers = { "Content-Type": "application/json" };
+                        params1 = [];
+                        for (i = 0; i < userVibes.length; i++) {
+                            merge = [];
+                            if (userVibes[i].vibeTags) {
+                                merge = __spreadArray(__spreadArray([], userVibes[i].vibeTags, true), userVibes[i].hashtags, true);
+                            }
+                            else {
+                                merge = __spreadArray([], userVibes[i].hashtags, true);
+                            }
+                            param = {
+                                Itemid: userVibes[i]._id.toString(),
+                                Labels: merge,
+                                Comment: userVibes[i].description
+                                    ? userVibes[i].description
+                                    : "some comment",
+                                Timestamp: userVibes[i].createdAt,
+                                Userid: userId,
+                                Status: profileStatus === "public" ? "public" : "private",
+                                AdminStatus: userVibes[i].adminHidden ? "hidden" : "unhidden",
+                            };
+                            params1.push(param);
+                        }
+                        axios_1.default
+                            .post(this.feedUrl + "items", params1, { headers: headers })
+                            .then(function (d) {
+                            var _a;
+                            return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d === null || d === void 0 ? void 0 : d.data, args: args }, "successfully added items in feed_admin_confirmUserAll_postProfPics in gorse feed");
+                        })
+                            .catch(function (err) {
+                            var _a;
+                            (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.error({ err: err }, "failed to post vibes in feed_admin_confirmUserAll_postProfPics in gorse feed");
+                        });
+                        return [2 /*return*/];
                 }
-                axios_1.default
-                    .post(this.feedUrl + "items", params1, { headers: headers })
-                    .then(function (d) {
-                    var _a;
-                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ d: d, args: args }, "successfully added items in feed_admin_confirmUserAll_postProfPics in gorse feed");
-                })
-                    .catch(function (err) {
-                    var _a;
-                    (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.error({ err: err }, "failed to post vibes in feed_admin_confirmUserAll_postProfPics in gorse feed");
-                });
-                return [2 /*return*/];
             });
         });
     };
@@ -753,7 +770,7 @@ var GorseUtil = /** @class */ (function () {
                 })
                     .then(function (d) {
                     var _a;
-                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ d: d, args: args }, "successfully added like feedback in feed_likeVibe in gorse feed");
+                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d === null || d === void 0 ? void 0 : d.data, args: args }, "successfully added like feedback in feed_likeVibe in gorse feed");
                 })
                     .catch(function (err) {
                     var _a;
@@ -783,7 +800,7 @@ var GorseUtil = /** @class */ (function () {
                     .post(this.feedUrl + "feedback", params, { headers: headers })
                     .then(function (d) {
                     var _a;
-                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ d: d, args: args }, "successfully added click feedback in feed_postClick in gorse feed");
+                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d === null || d === void 0 ? void 0 : d.data, args: args }, "successfully added click feedback in feed_postClick in gorse feed");
                 })
                     .catch(function (err) {
                     var _a;
@@ -815,11 +832,86 @@ var GorseUtil = /** @class */ (function () {
                 })
                     .then(function (d) {
                     var _a;
-                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ d: d, args: args }, "successfully added read feedback in feed_postRead in gorse feed");
+                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d === null || d === void 0 ? void 0 : d.data, args: args }, "successfully added read feedback in feed_postRead in gorse feed");
                 })
                     .catch(function (err) {
                     var _a;
                     (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.error({ err: err }, "failed to post read feedback in feed_postRead in gorse feed");
+                });
+                return [2 /*return*/];
+            });
+        });
+    };
+    GorseUtil.prototype.feed_postVibe = function (args) {
+        return __awaiter(this, void 0, void 0, function () {
+            var userId, profileStatus, vibe, headers, merge, params, arr;
+            var _this = this;
+            return __generator(this, function (_a) {
+                userId = args.userId, profileStatus = args.profileStatus, vibe = args.vibe;
+                headers = {
+                    "Content-Type": "application/json",
+                };
+                merge = [];
+                if (vibe.vibeTags) {
+                    merge = __spreadArray(__spreadArray([], vibe.vibeTags, true), vibe.hashtags, true);
+                }
+                else {
+                    merge = __spreadArray([], vibe.hashtags, true);
+                }
+                params = {
+                    Itemid: vibe._id.toString(),
+                    Labels: merge,
+                    Comment: vibe.description ? vibe.description : "some comment",
+                    Timestamp: vibe.createdAt,
+                    Userid: userId.toString(),
+                    Status: profileStatus === "private" ? "private" : "public",
+                    AdminStatus: vibe.adminHidden ? "hidden" : "unhidden",
+                };
+                arr = [];
+                arr.push(params);
+                axios_1.default
+                    .post(process.env.GORSE_VIBE_API + "items", arr, { headers: headers })
+                    .then(function (d) {
+                    var _a;
+                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d === null || d === void 0 ? void 0 : d.data, args: args }, "successfully posted vibe in feed_postVibe in gorse feed");
+                })
+                    .catch(function (err) {
+                    var _a;
+                    (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.error({ err: err }, "failed to post vibe in feed_postVibe in gorse feed");
+                });
+                return [2 /*return*/];
+            });
+        });
+    };
+    GorseUtil.prototype.feed_admin_rejectUser = function (args) {
+        return __awaiter(this, void 0, void 0, function () {
+            var userId, vibes, p, i, promise;
+            var _this = this;
+            return __generator(this, function (_a) {
+                userId = args.userId, vibes = args.vibes;
+                axios_1.default
+                    .delete(this.feedUrl + "user/".concat(userId))
+                    .then(function (d) {
+                    var _a;
+                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d === null || d === void 0 ? void 0 : d.data, args: args }, "successfully deleted user in feed_admin_rejectUser in gorse feed");
+                })
+                    .catch(function (err) {
+                    var _a;
+                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.error({ err: err }, "failed to delete user deleted user in feed_admin_rejectUser in gorse feed");
+                });
+                p = [];
+                for (i = 0; i < vibes.length; i++) {
+                    promise = axios_1.default.delete(this.feedUrl + "item/".concat(vibes[i]._id.toString()));
+                    p.push(promise);
+                }
+                Promise.all(p)
+                    .then(function (d) {
+                    var _a;
+                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d === null || d === void 0 ? void 0 : d.data, args: args }, "successfully deleted items (vibes) from gorse feed in feed_admin_rejectUser");
+                })
+                    .catch(function (err) {
+                    var _a;
+                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.error({ err: err }, "failed to delete items (vibes) from gorse feed in feed_admin_rejectUser");
                 });
                 return [2 /*return*/];
             });

@@ -117,5 +117,23 @@ declare class GorseUtil {
         userId: string;
         itemId: string;
     }): Promise<void>;
+    feed_postVibe(args: {
+        userId: string;
+        vibe: {
+            vibeTags: string[];
+            hashtags: string[];
+            _id: string;
+            description: string;
+            createdAt: Date;
+            adminHidden: boolean;
+        };
+        profileStatus: "public" | "private";
+    }): Promise<void>;
+    feed_admin_rejectUser(args: {
+        userId: string;
+        vibes: {
+            _id: string;
+        }[];
+    }): Promise<void>;
 }
 export default GorseUtil;
