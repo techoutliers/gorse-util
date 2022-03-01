@@ -375,6 +375,7 @@ class GorseUtil {
     allLikes: Record<feed_set_account_status_likes, string>[];
     profileStatus: string;
   }) {
+    this.logger?.info({ args }, "feed_admin_activate");
     const { userId, userVibes, allLikes, profileStatus } = args;
     const headers = { "Content-Type": "application/json" };
 
@@ -391,7 +392,7 @@ class GorseUtil {
       .then((d: any) =>
         this.logger?.info(
           { data: d?.data, args },
-          "successfully deleted a user in feed_admin_activate in gorse feed "
+          "successfully posted a user in feed_admin_activate in gorse feed "
         )
       )
       .catch((e) =>

@@ -340,10 +340,12 @@ var GorseUtil = /** @class */ (function () {
         });
     };
     GorseUtil.prototype.feed_admin_activate = function (args) {
+        var _a;
         return __awaiter(this, void 0, void 0, function () {
             var userId, userVibes, allLikes, profileStatus, headers, hold, user_params, params1, i, merge, param, params2, i, param;
             var _this = this;
-            return __generator(this, function (_a) {
+            return __generator(this, function (_b) {
+                (_a = this.logger) === null || _a === void 0 ? void 0 : _a.info({ args: args }, "feed_admin_activate");
                 userId = args.userId, userVibes = args.userVibes, allLikes = args.allLikes, profileStatus = args.profileStatus;
                 headers = { "Content-Type": "application/json" };
                 hold = [""];
@@ -358,7 +360,7 @@ var GorseUtil = /** @class */ (function () {
                     .post(this.feedUrl + "user", user_params, { headers: headers })
                     .then(function (d) {
                     var _a;
-                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d === null || d === void 0 ? void 0 : d.data, args: args }, "successfully deleted a user in feed_admin_activate in gorse feed ");
+                    return (_a = _this.logger) === null || _a === void 0 ? void 0 : _a.info({ data: d === null || d === void 0 ? void 0 : d.data, args: args }, "successfully posted a user in feed_admin_activate in gorse feed ");
                 })
                     .catch(function (e) {
                     var _a;
